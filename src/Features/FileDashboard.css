@@ -1,0 +1,41 @@
+.headerBar {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0 ;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.selectionControls {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    font-size: 1rem;
+    width: 10rem;
+    color: #000000;
+}
+
+.tableContainer {
+  max-height: 400px; 
+  border: 1px solid #e0e0e0;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table th {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    color: #666;
+    font-weight: 500;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 10; 
+    background-color: white; 
+    border-bottom: 2px solid #e0e0e0;
+}
