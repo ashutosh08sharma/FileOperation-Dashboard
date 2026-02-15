@@ -1,8 +1,8 @@
 import './index.css';
 import { sampleData } from './data';
-import { FileDashboard } from './Features/FileDashboard';
+import { FileDashboard } from './Features/FileDashboard/FileDashboard';
 
-
+// Main application component that renders the file dashboard
 export default function App() {
   return (
     <div className="app">

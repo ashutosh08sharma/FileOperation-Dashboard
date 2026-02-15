@@ -1,11 +1,17 @@
-import React, { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { FileItem } from './types';
-import IndeterminateCheckbox from '../components/Checkbox/IndeterminateCheckbox';
-import './FileDashboard.css';
-import DownloadIcon from '../Icons/DownloadIcon';
-import { useSelection } from '../hooks/useSelection';
+import IndeterminateCheckbox from '../../components/Checkbox/IndeterminateCheckbox';
+import DownloadIcon from '../../Icons/DownloadIcon';
 import TableRow from './TableRow';
+import ReportModal from '../../components/Modal/ReportModal';
+import { useSelection } from '../../hooks/useSelection';
+import './FileDashboard.css';
 
+/**
+ * FileDashboard component that displays a list of files in a table with selection and download functionality.
+ * It uses the useSelection hook to manage selection state and displays a report modal after downloading.
+ * If no data is provided, it shows an error message.
+ */
 export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element => {
   const {
     selectedIds,
@@ -15,28 +21,21 @@ export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element
     toggleRow,
     toggleAll
   } = useSelection(data, (item) => item.name);
+  const [reportData, setReportData] = useState<{ downloadedCount: number; skippedCount: number; items: FileItem[] } | null>(null);
 
-  const handleDownload = useCallback((): void => {
-    const selectedItems = data?.filter(item => selectedIds.has(item.name)) || [];
-
+  const handleDownload = useCallback(() => {
+    const selectedItems = data.filter(d => selectedIds.has(d.name));
     if (selectedItems.length === 0) return;
 
-    const availableItems = selectedItems.filter(
-      item => item.status?.toLowerCase() === 'available'
-    );
+    const availableItems = selectedItems.filter(i => i.status?.toLowerCase() === 'available');
     const downloadedCount = availableItems.length;
     const skippedCount = selectedItems.length - downloadedCount;
 
-    const report = selectedItems.map(item => {
-      const isAvailable = item.status?.toLowerCase() === 'available';
-      const statusLabel = isAvailable ? 'Downloaded' : 'Skipped';
-
-      return `Device: ${item.device}\nPath: ${item.path}\nStatus: ${statusLabel}`;
-    }).join('\n\n');
-
-    const summary = `Total Files: ${selectedItems.length}, Downloaded: ${downloadedCount}, Skipped: ${skippedCount}`;
-
-    alert(`${summary}\n\n${report}`);
+    setReportData({
+      items: selectedItems,
+      downloadedCount,
+      skippedCount
+    });
   }, [data, selectedIds]);
 
   if (!data || data.length === 0) {
@@ -49,6 +48,12 @@ export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element
 
   return (
     <div className="container">
+      {reportData && (
+        <ReportModal
+          data={reportData}
+          onClose={() => setReportData(null)}
+        />
+      )}
       <div className="headerBar">
         <div className="selectionControls">
           <IndeterminateCheckbox

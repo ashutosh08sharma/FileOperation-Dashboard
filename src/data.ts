@@ -1,4 +1,4 @@
-import { FileItem } from "./Features/types";
+import { FileItem } from "./Features/FileDashboard/types";
 
 const generateId = (): string => {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {

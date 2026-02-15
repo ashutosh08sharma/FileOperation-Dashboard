@@ -1,37 +1,42 @@
 # File Operation Dashboard
 
-## Getting Started
+A simple dashboard for viewing and downloading file artifacts from multiple devices.
 
-### Prerequisites
-- npm or yarn
-
-### Installation
+## Setup
 
 ```bash
 npm install
-```
-
-### Development
-
-```bash
 npm run start
 ```
 
-The app will be available at `http://localhost:5173`
+Open [http://localhost:5173](http://localhost:5173)
 
-### Build
-
-```bash
-npm run build
-```
-
-### Preview Build
+## Scripts
 
 ```bash
-npm run preview
+npm run start      # Start dev server
+npm run build    # Production build
+npm run preview  # Preview production build
+npm test         # Run tests
 ```
+##  Component Structure
 
-## Technology Stack
-- **React** 18.2
-- **TypeScript** 5.2
-- **Vite** 5.0
+* **`FileDashboard.tsx` -  Renders the UI based on props.
+* **`useSelection.ts` - Encapsulates the core checkbox logic (indeterminate states, toggle all). 
+* **`TableRow` - Render Row Component based on props.
+* **`CheckBox` - Render CheckBox Component based on props.
+* **`Modal` -  Render Report Modal to display what was downloaded vs. skipped.
+
+## Features
+
+- Select individual files or use the header checkbox to select all
+- Download available files (scheduled files are automatically skipped)
+- Shows a summary of what was downloaded vs. skipped
+- Sticky table headers for easier navigation (Future Edits - Virtualization if dealing with large dataset)
+
+
+## Tech Stack
+
+- React + TypeScript
+- Vite
+- Jest + React Testing Library

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileItem } from './types';
-import IndeterminateCheckbox from '../components/Checkbox/IndeterminateCheckbox';
+import IndeterminateCheckbox from '../../components/Checkbox/IndeterminateCheckbox';
 
 interface TableRowProps {
   item: FileItem;
@@ -8,19 +8,20 @@ interface TableRowProps {
   onToggle: (id: string) => void;
 }
 
-const TableRow = React.memo(({ 
-  item, 
-  isSelected, 
-  onToggle 
+// Memoized row component for rendering file items in the table
+const TableRow = React.memo(({
+  item,
+  isSelected,
+  onToggle
 }: TableRowProps): JSX.Element => {
   return (
-    <tr 
+    <tr
       className="row"
       aria-selected={isSelected}
       onClick={() => onToggle(item.name)}
     >
       <td className="cell" onClick={(e) => e.stopPropagation()}>
-        <IndeterminateCheckbox 
+        <IndeterminateCheckbox
           checked={isSelected}
           onChange={() => onToggle(item.name)}
           aria-label={`Select ${item.name}`}

@@ -1,0 +1,87 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 35rem;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.modalHeader {
+  padding: 1.2rem 1.7rem;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalBody {
+  padding: 1.7rem;
+  overflow-y: auto;
+  font-family: sans-serif; 
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  color: #333;
+  background: #f9f9f9;
+}
+
+.modalFooter {
+  padding: 1.2rem 1.7rem;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.primaryBtn {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.primaryBtn:hover {
+  background: #555;
+}
+
+@media (max-width: 600px) {
+  .modalContent {
+    max-height: 90vh;
+    width: 100%;
+  }
+
+  .modalFooter {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .primaryBtn {
+    width: 100%;
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+}
