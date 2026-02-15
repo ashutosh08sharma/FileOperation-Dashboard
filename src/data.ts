@@ -4,7 +4,7 @@ const generateId = (): string => {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
     return crypto.randomUUID();
   }
-  
+
   return `id-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 9)}`;
 };
 
@@ -42,6 +42,27 @@ export const sampleData: FileItem[] = [
     name: 'cryptbase.dll',
     device: 'Yoshi',
     path: '\\Device\\HarddiskVolume1\\Windows\\System32\\cryptbase.dll',
+    status: 'Scheduled'
+  },
+  {
+    id: crypto.randomUUID(),
+    name: 'cryptdex.dll',
+    device: 'Bob',
+    path: '\\Device\\HarddiskVolume1\\Windows\\System32\\cryptdex.dll',
+    status: 'Scheduled'
+  },
+  {
+    id: crypto.randomUUID(),
+    name: 'datasync.dll',
+    device: 'Charlie',
+    path: '\\Device\\HarddiskVolume1\\Windows\\System32\\datasync.dll',
+    status: 'Available'
+  },
+  {
+    id: crypto.randomUUID(),
+    name: 'wsh.dll',
+    device: 'Toad',
+    path: '\\Device\\HarddiskVolume1\\Windows\\System32\\wsh.dll',
     status: 'Scheduled'
   }
 ];

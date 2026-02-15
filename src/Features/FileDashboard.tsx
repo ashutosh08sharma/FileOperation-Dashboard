@@ -17,16 +17,26 @@ export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element
   } = useSelection(data, (item) => item.name);
 
   const handleDownload = useCallback((): void => {
-    const selectedItems = data?.filter(item => selectedIds.has(item.name));
+    const selectedItems = data?.filter(item => selectedIds.has(item.name)) || [];
 
     if (selectedItems.length === 0) return;
 
+    const availableItems = selectedItems.filter(
+      item => item.status?.toLowerCase() === 'available'
+    );
+    const downloadedCount = availableItems.length;
+    const skippedCount = selectedItems.length - downloadedCount;
+
     const report = selectedItems.map(item => {
-      const downloadStatus = item.status === 'Available' ? 'Downloaded' : 'Skipped';
-      return `Device: ${item.device}\nPath: ${item.path}\nStatus: ${item.status}\nDownload Status: ${downloadStatus}`;
+      const isAvailable = item.status?.toLowerCase() === 'available';
+      const statusLabel = isAvailable ? 'Downloaded' : 'Skipped';
+
+      return `Device: ${item.device}\nPath: ${item.path}\nStatus: ${statusLabel}`;
     }).join('\n\n');
 
-    alert(report);
+    const summary = `Total Files: ${selectedItems.length}, Downloaded: ${downloadedCount}, Skipped: ${skippedCount}`;
+
+    alert(`${summary}\n\n${report}`);
   }, [data, selectedIds]);
 
   if (!data || data.length === 0) {
@@ -72,6 +82,7 @@ export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element
               <th>Path</th>
               <th>
                 <div className="alignBox">
+                  <div className="ghostSpacer" aria-hidden="true" />
                   <span>Status</span>
                 </div>
               </th>
