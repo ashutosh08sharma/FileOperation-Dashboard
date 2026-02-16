@@ -1,6 +1,6 @@
 import React from 'react';
-import { FileItem } from './types';
-import IndeterminateCheckbox from '../../components/Checkbox/IndeterminateCheckbox';
+import { FileItem } from '../../Features/FileDashboard/types';
+import IndeterminateCheckbox from '../Checkbox/IndeterminateCheckbox';
 
 interface TableRowProps {
   item: FileItem;
@@ -18,12 +18,12 @@ const TableRow = React.memo(({
     <tr
       className="row"
       aria-selected={isSelected}
-      onClick={() => onToggle(item.name)}
+      onClick={() => onToggle(item.id)}
     >
       <td className="cell" onClick={(e) => e.stopPropagation()}>
         <IndeterminateCheckbox
           checked={isSelected}
-          onChange={() => onToggle(item.name)}
+          onChange={() => onToggle(item.id)}
           aria-label={`Select ${item.name}`}
         />
       </td>

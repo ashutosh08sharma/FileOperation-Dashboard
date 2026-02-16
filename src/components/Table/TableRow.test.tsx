@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TableRow from './TableRow';
-import { FileItem } from './types';
+import { FileItem } from '../../Features/FileDashboard/types';
 
 jest.mock('../../components/Checkbox/IndeterminateCheckbox', () => (props: any) => (
     <input
@@ -72,7 +72,7 @@ describe('TableRow', () => {
             </table>
         );
         fireEvent.click(screen.getByRole('row'));
-        expect(onToggle).toHaveBeenCalledWith('file1.txt');
+        expect(onToggle).toHaveBeenCalledWith('file1');
     });
 
     it('calls onToggle when checkbox is changed', () => {
@@ -84,6 +84,6 @@ describe('TableRow', () => {
             </table>
         );
         fireEvent.click(screen.getByTestId('indeterminate-checkbox'));
-        expect(onToggle).toHaveBeenCalledWith('file1.txt');
+        expect(onToggle).toHaveBeenCalledWith('file1');
     });
 });

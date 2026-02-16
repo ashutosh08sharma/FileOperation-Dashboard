@@ -2,16 +2,24 @@ import { useCallback, useState } from 'react';
 import { FileItem } from './types';
 import IndeterminateCheckbox from '../../components/Checkbox/IndeterminateCheckbox';
 import DownloadIcon from '../../Icons/DownloadIcon';
-import TableRow from './TableRow';
 import ReportModal from '../../components/Modal/ReportModal';
 import { useSelection } from '../../hooks/useSelection';
 import './FileDashboard.css';
+import DataTable from '../../components/Table/DataTable';
 
 /**
  * FileDashboard component that displays a list of files in a table with selection and download functionality.
  * It uses the useSelection hook to manage selection state and displays a report modal after downloading.
  * If no data is provided, it shows an error message.
  */
+
+const columns: { name: string; isExtended: boolean }[] = [
+  { name: 'Name', isExtended: false },
+  { name: 'Device', isExtended: false },
+  { name: 'Path', isExtended: false },
+  { name: 'Status', isExtended: true }
+];
+
 export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element => {
   const {
     selectedIds,
@@ -20,11 +28,11 @@ export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element
     isIndeterminate,
     toggleRow,
     toggleAll
-  } = useSelection(data, (item) => item.name);
+  } = useSelection(data, (item) => item.id);
   const [reportData, setReportData] = useState<{ downloadedCount: number; skippedCount: number; items: FileItem[] } | null>(null);
 
-  const handleDownload = useCallback(() => {
-    const selectedItems = data.filter(d => selectedIds.has(d.name));
+  const handleDownload = useCallback((): void => {
+    const selectedItems = data.filter(d => selectedIds.has(d.id));
     if (selectedItems.length === 0) return;
 
     const availableItems = selectedItems.filter(i => i.status?.toLowerCase() === 'available');
@@ -54,6 +62,7 @@ export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element
           onClose={() => setReportData(null)}
         />
       )}
+      {/* Eventually this header can be extracted to a separate component if needed */}
       <div className="headerBar">
         <div className="selectionControls">
           <IndeterminateCheckbox
@@ -76,35 +85,12 @@ export const FileDashboard = ({ data = [] }: { data?: FileItem[] }): JSX.Element
           Download Selected
         </button>
       </div>
-
-      <div className="tableContainer">
-        <table className="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Device</th>
-              <th>Path</th>
-              <th>
-                <div className="alignBox">
-                  <div className="ghostSpacer" aria-hidden="true" />
-                  <span>Status</span>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(item => (
-              <TableRow
-                key={item.id}
-                item={item}
-                isSelected={selectedIds.has(item.name)}
-                onToggle={toggleRow}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        data={data}
+        toggleRow={toggleRow}
+        selectedIds={selectedIds}
+        columns={columns}
+      />
     </div>
   );
 };
