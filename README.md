@@ -23,6 +23,7 @@ npm test         # Run tests
 
 * **`FileDashboard.tsx` -  Renders the UI based on props.
 * **`useSelection.ts` - Encapsulates the core checkbox logic (indeterminate states, toggle all). 
+* **`DataTable` - Encapsulates the data table Component.
 * **`TableRow` - Render Row Component based on props.
 * **`CheckBox` - Render CheckBox Component based on props.
 * **`Modal` -  Render Report Modal to display what was downloaded vs. skipped.
